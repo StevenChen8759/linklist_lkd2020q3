@@ -91,9 +91,41 @@ int main(int argc, char *argv[]){
 
     /* TODO: Automatically input testing data! */
 
-    list **ptr;
-    
+    /* Local variable declaration */
+    list *head, *ptr, *prev, *temp;
+    int i;
+
+    /* Random seed initialize */
+    srand(time(NULL));
+
+    ptr = NULL;
+
+    /* Insert 100 nodes to the list */
+    for (i = 0 ; i < 100 ; i++) {
+
+        insert_node(&ptr, (99 - i));
+
+        if (i == 0) head = ptr;
+    }
+
+    /* Print all nodes in the list */
+    prev = NULL;
+    ptr = head; // Set address to the head
+    i = 0;
+
+    while (ptr != NULL){
+
+        printf("%d -> ", ptr->data);
+        if ( (++i % 10) == 0) printf("\n");
+
+        temp = ptr;
+        ptr = XOR(prev, ptr->addr);
+        prev = temp;
+
+    }
+
+    /* Free allocated nodes */
+    delete_list(head);
 
     return 0;
 }
-
