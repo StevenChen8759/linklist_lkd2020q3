@@ -87,6 +87,36 @@ list *sort(list *start)
     return start;
 }
 
+void print_list(list *head) {
+
+    list *ptr, *prev, *temp;
+    int cnt = 0;
+
+    if (head == NULL) return;
+
+    ptr = head; prev = NULL;
+
+    /* Print all nodes in the list */
+    prev = NULL;
+    ptr = head; // Set address to the head
+    cnt = 0;
+
+    while (ptr != NULL){
+
+        printf("%d <-> ", ptr->data);
+
+        temp = ptr;
+        ptr = XOR(prev, ptr->addr);
+        prev = temp;
+
+        if ( (++cnt % 10) == 0 && ptr != NULL) printf("\n");
+
+    }
+
+    printf("<End of list>\n");
+
+}
+
 int main(int argc, char *argv[]){
 
     /* TODO: Automatically input testing data! */
@@ -100,7 +130,7 @@ int main(int argc, char *argv[]){
 
     ptr = NULL;
 
-    /* Insert 100 nodes to the list */
+    /* Insert 100 nodes to the list and print it*/
     for (i = 0 ; i < 100 ; i++) {
 
         insert_node(&ptr, (99 - i));
@@ -108,21 +138,7 @@ int main(int argc, char *argv[]){
         if (i == 0) head = ptr;
     }
 
-    /* Print all nodes in the list */
-    prev = NULL;
-    ptr = head; // Set address to the head
-    i = 0;
-
-    while (ptr != NULL){
-
-        printf("%d -> ", ptr->data);
-        if ( (++i % 10) == 0) printf("\n");
-
-        temp = ptr;
-        ptr = XOR(prev, ptr->addr);
-        prev = temp;
-
-    }
+    print_list(head);
 
     /* Free allocated nodes */
     delete_list(head);
